@@ -16,4 +16,20 @@ export class MovieService {
     return this.httpClient.get(`${this.baseUrl}/movies`, options)
       .toPromise();
   }
+
+  getOne(id):Promise<any> {
+    const options = {
+      withCredentials: true
+    };
+    return this.httpClient.get(`${this.baseUrl}/movies/${id}`, options)
+      .toPromise();
+  }
+
+  create(movie):Promise<any> {
+    const options = {
+      withCredentials: true
+    };
+    return this.httpClient.post(`${this.baseUrl}/movies`, movie, options)
+      .toPromise();
+  }
 }
