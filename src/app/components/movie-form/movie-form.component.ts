@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input, Output, EventEmitter} from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { Router } from '@angular/router';
 
@@ -7,14 +7,19 @@ import { Router } from '@angular/router';
   templateUrl: './movie-form.component.html',
   styleUrls: ['./movie-form.component.css']
 })
+
 export class MovieFormComponent implements OnInit {
 
-  feedbackEnabled = false;
-  error = null;
-  processing = false;
-  movie: Object = {};
+  @Input() feedbackEnabled: boolean ;
+  @Input() error: string ;
+  @Input() processing: boolean ;
+  @Input() movie: any;
 
-  constructor(private movieService: MovieService, private router: Router) { }
+  @Output() submitdata: EventEmitter<any> = new EventEmitter;
+
+  constructor(private movieService: MovieService, private router: Router) {
+    this.movie= {}
+   }
 
   ngOnInit() {
   }
@@ -25,15 +30,8 @@ export class MovieFormComponent implements OnInit {
     this.feedbackEnabled = true;
     if (form.valid) {
       this.processing = true;
-      this.movieService.create(this.movie)
-        .then((result) => {
-         this.router.navigate(['/']);
-        })
-        .catch((err) => {
-          this.error = err.error.error;
-          this.processing = false;
-          this.feedbackEnabled = false;
-        });
+      this.submitdata.emit(this.movie);
+      //yo page, there was a submit action!
     }
   }
 

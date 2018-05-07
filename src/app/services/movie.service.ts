@@ -32,4 +32,20 @@ export class MovieService {
     return this.httpClient.post(`${this.baseUrl}/movies`, movie, options)
       .toPromise();
   }
+
+  update(movie):Promise<any> {
+    const options = {
+      withCredentials: true
+    };
+    return this.httpClient.put(`${this.baseUrl}/movies/${movie._id}`, movie, options)
+      .toPromise();
+  }
+
+  deleteOne(id):Promise<any> {
+    const options = {
+      withCredentials: true
+    };
+    return this.httpClient.delete(`${this.baseUrl}/movies/${id}`, options)
+      .toPromise();
+  }
 }

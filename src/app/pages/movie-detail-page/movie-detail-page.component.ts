@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-detail-page',
@@ -10,21 +10,29 @@ import { ActivatedRoute } from '@angular/router';
 export class MovieDetailPageComponent implements OnInit {
 
   movie:Object;
+  idMovie: string;
 
-  constructor(private movieService: MovieService,private activatedRoute: ActivatedRoute) { }
+  constructor(private movieService: MovieService,private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      const id=params.id;
-      this.movieService.getOne(id)
+      this.idMovie = params.id;
+      this.movieService.getOne(this.idMovie)
       .then((data) => {
         setTimeout(()=>{
           this.movie = data;
         },1500);
       });
     });
-    
-
   }
 
+  handleDeleteClick(){
+    this.movieService.deleteOne(this.idMovie)
+    .then(()=>{
+      this.router.navigate(['/']);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 }

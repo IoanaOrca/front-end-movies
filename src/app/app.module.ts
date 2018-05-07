@@ -13,11 +13,13 @@ import { MovieCreatePageComponent } from './pages/movie-create-page/movie-create
 
 import { MovieService } from './services/movie.service';
 import { MovieFormComponent } from './components/movie-form/movie-form.component';
+import { MovieEditPageComponent } from './components/movie-edit-page/movie-edit-page.component';
 
 const routes: Routes = [
   { path: '',  component: HomePageComponent },
   { path: 'movies/create',component: MovieCreatePageComponent},
-  { path: 'movies/:id',component: MovieDetailPageComponent}
+  { path: 'movies/:id',component: MovieDetailPageComponent},
+  { path: 'movies/:id/edit', component: MovieEditPageComponent}
 
 ];
 
@@ -29,7 +31,8 @@ const routes: Routes = [
     MovieCardComponent,
     MovieDetailPageComponent,
     MovieCreatePageComponent,
-    MovieFormComponent
+    MovieFormComponent,
+    MovieEditPageComponent
   ],
   imports: [
     BrowserModule,
